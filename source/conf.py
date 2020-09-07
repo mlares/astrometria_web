@@ -17,7 +17,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'comp2020'
+project = 'Astrometría 2020'
 copyright = '2020, Marcelo Lares'
 author = 'Marcelo Lares'
 

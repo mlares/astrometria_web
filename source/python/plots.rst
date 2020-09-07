@@ -21,6 +21,7 @@ al buscar ayuda y bibliografía:
 * `Altair <https://altair-viz.github.io/>`_
 * `Pygal <http://www.pygal.org/en/stable/>`_
 * `Pandas <https://pandas.pydata.org/pandas-docs/stable/user_guide/visualization.html>`_
+* `Plotnine <https://plotnine.readthedocs.io/en/stable/index.html>`_
 
 La elección de una de estas herramientas para hacer un gráfico depende del
 contexto, para qué se quiere hacer el gráfico, dónde se va a mostrar y a partir
@@ -827,6 +828,120 @@ más opciones para graficar.
 
 
 
+Gramática de gráficos con plotnine
+====================================
+
+Una forma natural de hacer gráficos es mediante el "diseño orientado a
+objetos", que se describe en el libro `"The grammar of graphics", de L.
+Wilkinson, 2005, Springer-Verlag, New York <https://www.springer.com/gp/book/9780387245447>`_.
+
+Las ideas de este libro están implementadas en una librería de R muy
+popular, que se llama `ggplot2 <https://github.com/tidyverse/ggplot2>`_.
+
+Existe una versión para python, denominada `plotnine <https://plotnine.readthedocs.io/en/stable/index.html>`_.  Este paquete permite hacer gráficos complejos con muchas menos líneas de código comparado por ejemplo con matplotlib.
+
+Supongamos por ejemplo que tenemos datos de vehículos, y queremos
+graficar el rendimiento del combustible en función del peso,
+diferenciando según la cantidad de marchas:
+ 
+.. image:: readme-image-4.png
+    :width: 600px
+    :align: center
+    :alt: Gráfico de vehículos (tomado de https://plotnine.readthedocs.io/en/stable/index.html)
+
+Este gráfico se puede hacer con la siguiente idea:
+
+* tengo los todos datos en una tabla
+* elijo los datos que quiero graficar
+* elijo la estética
+* agrego un ajuste lineal con su error
+
+la implementación es la siguiente:
 
 
+.. code-block:: python
+
+   from plotnine import ggplot, geom_point, aes, stat_smooth, facet_wrap
+   from plotnine.data import mtcars
+
+   (ggplot(mtcars, aes('wt', 'mpg', color='factor(gear)'))
+    + geom_point()
+    + stat_smooth(method='lm')
+    + facet_wrap('~gear'))
+    
+De esta forma el gráfico está hecho en "capas".  Veamos esto más en
+detalle:
+
+1. Con ggplot se crea una instancia de un gráfico.  Los argumentos de
+   ggplot con la fuente de datos y la selección de los datos a
+   graficar::
+
+      ggplot(mtcars, aes('wt', 'mpg', color='factor(gear)'))
+
+2. Una vez que se seleccionaron los datos, hay que elegir un atributo
+   gráfico con el cual se quieren representar.  Por ejemplo, con
+   puntos::
+
+      estilo = geom_point()
+
+3. Se puede agregar algún análisis estadístico. Por ejemplo un ajuste
+   lineal::
+
+      stats = stat_smooth(method='lm')
+
+4. Y finalmente, elegimos separar los gráficos según la cantidad de
+   marchas::
+
+      paneles = facet_wrap('~gear')
+
+Esto ultimo se llama "faceting". Ahora se puede rehacer el gráfico de una forma más evidente:
+
+.. code-block:: python
+
+   from plotnine import ggplot, geom_point, aes, stat_smooth, facet_wrap
+   from plotnine.data import mtcars
+
+   plot = ggplot(mtcars, aes('wt', 'mpg', color='factor(gear)'))
+   estilo = geom_point()
+   stats = stat_smooth(method='lm')
+   paneles = facet_wrap('~gear')
+
+   plot + estilo + stats + paneles
+
+
+Se puede probar agregar o sacar capas, por ejemplo::
+
+   plot + estilo
+
+hace el gráfico sin las estadísticas y en un solo panel.  Se puede
+agregar o sacar el ajuste de la recta y poner en paneles o no::
+
+   plot + estilo + stats
+   # o bien:
+   plot + estilo + paneles
+
+
+Para dar otro ejemplo, supongamos que queremos
+estudiar relaciones en los parámetros de una base de
+datos de planetas extrasolares.  El siguiente gráfico es un gráfico 
+de dispersión del radio vs. el semieje mayor de la órbita de un
+conjunto de exoplanetas, donde el color indica el periodo y el tamaño
+de los puntos la masa*sin(i).
+
+
+.. code-block:: python
+
+   D=pd.read_csv('planets.csv')
+
+   axes = aes('pl_orbsmax','pl_radj',color='pl_orbper')
+   points = geom_point(aes(size='pl_bmassj'), alpha=0.5)
+
+   plt = ggplot(D, axes) + points
+   plt + scales.scale_x_log10() + scales.scale_y_log10() 
+
+
+.. image:: Figure_1.png
+    :width: 600px
+    :align: center
+    :alt: Exoplanetas
 
