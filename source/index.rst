@@ -34,6 +34,16 @@ Ayuda para python
    python/modules
    python/plots
 
+
+*****************
+Herramientas
+*****************
+
+.. toctree::
+   :maxdepth: 2
+
+   python/git
+
 ***********************
 Ayuda para las guias
 ***********************
