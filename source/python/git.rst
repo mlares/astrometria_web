@@ -111,9 +111,55 @@ y luego clonarlo. Para ello::
 donde el URL es el correspondiente al proyecto en GitHub.
 
 
+Para agregar archivos (pasar el área "staged")::
+
+   $ git add archivo
+
+Para agregar esos archivos a la base de datos del control de versión::
+
+   $ git commit -m "mensaje"
+
+Para saber el estado de los archivos::
+
+   $ git status
 
 
+Para obtener una lista de las versiones a las que se puede acceder::
+
+   $ git log
+
+Este comando devuelve los nombres de los commits (generados
+automáticamente, mediante una HASH del tipo SHA1), 
+como así también el autor, fecha y comentarios.
+Una versión resumida que da solamente el nombre::
+
+   $ git log --oneline
+
+Se puede volver a una de las versiones identificadas con el ID del
+commit::
+
+   $ git checkout 833372b
+
+Luego de revisar una versión anterior, se puede volver a la última
+versión con::
+
+   $ git checkout master
+
+donde "master" es el nombre de la rama principal.  Si se quiere
+desarrollar una versión "alternativa" del código, se puede hacer otra
+rama.  Por ejemplo, supongamos que la lista de commits es la
+siguiente (basado en el video de la clase)::
+
+   46e89c8 (HEAD -> master, origin/master, origin/HEAD) Corregi errores de ortografia
+   959f79a agrego prueba.py
+   833372b Initial commit
+
+queremos volver al segundo commit y hacer un desarrollo en paralelo::
+
+   $ git checkout 959f79a
+   $ git checkout -b remix
 
 
-
+Una revisión completa de las funcionalidades de Git se puede encontrar
+en el libro `Pro Git <https://git-scm.com/book/en/v2>`_.
 
