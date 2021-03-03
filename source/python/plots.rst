@@ -950,3 +950,8 @@ de los puntos la masa*sin(i).
 Resources:
 
 `Clearing the confusion once and for all: fig, ax = plt.subplots()<https://towardsdatascience.com/clearing-the-confusion-once-and-for-all-fig-ax-plt-subplots-b122bb7783ca>`_
+
+
+`Python for astronomers: plotting <https://python4astronomers.github.io/plotting/advanced.html>`_
+
+
