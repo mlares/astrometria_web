@@ -945,3 +945,8 @@ de los puntos la masa*sin(i).
     :align: center
     :alt: Exoplanetas
 
+
+
+Resources:
+
+`Clearing the confusion once and for all: fig, ax = plt.subplots()<https://towardsdatascience.com/clearing-the-confusion-once-and-for-all-fig-ax-plt-subplots-b122bb7783ca>`_
